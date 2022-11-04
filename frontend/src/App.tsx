@@ -9,16 +9,22 @@ function App() {
   const [searchData, setSearchData] = useState<any>([]);
 
   const callTextSearchApi = (t: string) => {
-    fetch(`${BACKEND_URL}/search_by_prompt`, {
-      body: JSON.stringify({ prompt: t }),
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((data: any) => {
-        // will decide what to do with this response later
-        console.log(data);
-        setSearchData(data);
-      });
+    if (t !== "") {
+      fetch(`${BACKEND_URL}/search_by_prompt`, {
+        body: JSON.stringify({ prompt: t }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      })
+        .then((response) => response.json())
+        .then((data: any) => {
+          // will decide what to do with this response later
+          console.log(data);
+          setSearchData(data);
+        });
+    }
   };
 
   useEffect(() => {
