@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
 import "./App.css";
+
+import { useEffect, useState } from "react";
+
 import { BACKEND_URL } from "./config";
 
 function App() {
@@ -28,17 +30,26 @@ function App() {
   }, [term]);
 
   return (
-    <div className="bg-black">
-      <main className="py-8">
-        <input
-          className="border-2 text-white border-gray-600 bg-black rounded-s mr-2 h-8 rounded-md px-2"
-          placeholder="Search..."
-          onChange={(e) => setTerm(e.target.value)}
-          value={term}
-        />
-        <button className="rounded-md bg-gradient-to-br from-purple-800 to-pink-500 text-white font-bold h-8 px-2">
-          Search
-        </button>
+    <div className="bg-[#10081B] text-white absolute h-full w-full">
+      <main className="w-full ml-auto mr-auto px-4 md:w-[40rem]">
+        <img className="py-8" src="/logo.png" width={300} alt="INFINIFT" />
+        <p className="mb-8">
+          You probably think NFT's are bullsh*t. That's because you've been
+          recommended any nice NFT art that you like. Because all NFT
+          marketplaces lack proper recommendation engines and image
+          classification
+        </p>
+        <div
+          className="rounded-lg p-1 bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: 'url("/bg.jpg")' }}
+        >
+          <input
+            className="w-full text-white bg-black rounded-s mr-2 h-12 rounded-md px-2"
+            placeholder="Start typing..."
+            onChange={(e) => setTerm(e.target.value)}
+            value={term}
+          />
+        </div>
       </main>
     </div>
   );
