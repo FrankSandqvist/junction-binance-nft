@@ -8,12 +8,13 @@ function App() {
 
   const callTextSearchApi = (t: string) => {
     fetch(`${BACKEND_URL}/search_by_prompt`, {
-      body: JSON.stringify({ query: t }),
+      body: JSON.stringify({ prompt: t }),
       method: "POST",
     })
       .then((response) => response.json())
       .then((data: any) => {
         // will decide what to do with this response later
+        console.log(data);
         setSearchData(data);
       });
   };
