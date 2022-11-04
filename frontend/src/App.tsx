@@ -1,16 +1,26 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { BACKEND_URL } from "./config";
 
 function App() {
   const [term, setTerm] = useState<string>("");
+  const [searchData, setSearchData] = useState<any>([]);
 
-  const callApi = () => {
-    return;
+  const callTextSearchApi = (t: string) => {
+    fetch(`${BACKEND_URL}/search_by_prompt`, {
+      body: JSON.stringify({ query: t }),
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data: any) => {
+        // will decide what to do with this response later
+        setSearchData(data);
+      });
   };
 
   useEffect(() => {
     const delayApiCallTimer = setTimeout(() => {
-      callApi();
+      callTextSearchApi(term);
     }, 400);
 
     return () => clearTimeout(delayApiCallTimer);
