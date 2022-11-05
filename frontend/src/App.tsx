@@ -65,7 +65,7 @@ function App() {
   };
 
   const callImageSnoopApi = (image: string, isUrl?: boolean) => {
-    if (!soundPlayed || Math.random() > 0.6) {
+    if (!soundPlayed || Math.random() > 0.75) {
       snoopSound.current?.play();
       setSoundPlayed(true);
       setMoveDoge(true);
