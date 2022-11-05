@@ -55,11 +55,17 @@ function App() {
     }
   };
 
-  const callImageSearchApi = (base64: string) => {
+  const callImageSearchApi = (image: string, isUrl?: boolean) => {
     const timeNow = Number(new Date());
     setLoading(true);
     fetch(`${BACKEND_URL}/search_by_image`, {
-      body: base64,
+      body: JSON.stringify(
+        isUrl ? { type: "url", image } : { type: "base64", image }
+      ),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       method: "POST",
     })
       .then((response) => {
@@ -113,21 +119,23 @@ function App() {
           className="py-8"
           src={`${process.env.PUBLIC_URL}/logo.png`}
           width={300}
-          alt="INFINIFT"
+          alt="INFINFT"
         />
-        <p className="mb-8">
+        <p className="mb-4">
           You probably think NFT's are bullsh*t. Probably, you can't get on
-          searching the marketplace for what you want. Because all NFT
-          marketplaces lack proper recommendation engines and image
-          classification
+          searching the marketplace for what you want.
+        </p>
+        <p className="mb-8 font-bold">
+          Because all NFT marketplaces lack proper recommendation engines and
+          image classification.
         </p>
         <div
-          className="rounded-lg p-1 bg-no-repeat bg-cover bg-center flex flex-row"
+          className="rounded-lg p-1 bg-no-repeat bg-cover bg-center flex flex-col md:flex-row"
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
         >
           <label
             htmlFor="file-upload"
-            className="bg-black rounded-md hover:cursor-pointer flex flex-row items-center justify-center w-1/2 hover:scale-95 duration-200"
+            className="bg-black rounded-md hover:cursor-pointer flex flex-row items-center justify-center mb-2 md:mb-0 md:w-1/2 hover:scale-95 duration-200"
           >
             <UploadIcon />
             <span className="font-bold text-md leading-tight md:text-lg">
@@ -146,7 +154,7 @@ function App() {
             id="file-upload"
           />
           <input
-            className="text-white bg-black rounded-s ml-2 h-12 rounded-md px-2 w-1/2"
+            className="text-white bg-black rounded-s h-12 rounded-md px-2 md:ml-2 md:w-1/2"
             placeholder="Or search by text..."
             onChange={(e) => setTerm(e.target.value)}
             value={term}
@@ -175,7 +183,14 @@ function App() {
             onClick={() => setTerm("sports car")}
           />
         </div>
-        {searchData && (
+        {loading && (
+          <div className="flex justify-end mb-4">
+            <div className="flex flex-row rounded-full bg-violet-900 text-sm px-4">
+               Loading...
+            </div>
+          </div>
+        )}
+        {!loading && searchData && (
           <div className="flex justify-end mb-4">
             <div className="flex flex-row rounded-full bg-violet-900 text-sm">
               {lastSearchTime && (
@@ -214,11 +229,7 @@ function App() {
               name={sd.name}
               dist={sd.dist}
               onClick={() => {
-                blobFromUrl(sd.src).then((blob) =>
-                  getBase64(blob as any).then((base64) =>
-                    callImageSearchApi(base64)
-                  )
-                );
+                callImageSearchApi(sd.src, true);
               }}
             />
           ))}
