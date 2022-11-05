@@ -60,7 +60,7 @@ function App() {
   return (
     <div className="bg-[#10081B] text-white absolute h-full w-full overflow-x-auto">
       <main className="w-full ml-auto mr-auto px-4 md:w-[40rem]">
-        <img className="py-8" src="/logo.png" width={300} alt="INFINIFT" />
+        <img className="py-8" src="./logo.png" width={300} alt="INFINIFT" />
         <p className="mb-8">
           You probably think NFT's are bullsh*t. That's because you've been
           recommended any nice NFT art that you like. Because all NFT
@@ -69,7 +69,7 @@ function App() {
         </p>
         <div
           className="rounded-lg p-1 bg-no-repeat bg-cover bg-center"
-          style={{ backgroundImage: 'url("/bg.jpg")' }}
+          style={{ backgroundImage: 'url("/.bg.jpg")' }}
         >
           <input
             className="w-full text-white bg-black rounded-s mr-2 h-12 rounded-md px-2"
@@ -80,7 +80,7 @@ function App() {
         </div>
         <div
           className="rounded-lg bg-no-repeat bg-cover bg-center blur-sm h-1 mb-3 mx-2"
-          style={{ backgroundImage: 'url("/bg.jpg")' }}
+          style={{ backgroundImage: 'url("/.bg.jpg")' }}
         />
         <div className="flex flex-row mb-4 gap-2">
           <ExampleSearchTerm term="Cat" onClick={() => setTerm("cat")} />
@@ -136,7 +136,7 @@ export const ImageResult = (props: {
 }) => {
   return (
     <div
-      style={{ backgroundImage: 'url("/bg.jpg")' }}
+      style={{ backgroundImage: 'url("/.bg.jpg")' }}
       className="p-[2px] rounded-sm bg-cover bg-center hover:scale-105 duration-200"
     >
       <div
