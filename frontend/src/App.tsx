@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import { BACKEND_URL } from "./config";
 
+const blobFromUrl = () => {};
+
 function App() {
   const [term, setTerm] = useState<string>("");
   const [searchData, setSearchData] = useState<any>([]);
@@ -15,7 +17,11 @@ function App() {
     if (t !== "") {
       const timeNow = Number(new Date());
       fetch(`${BACKEND_URL}/search_by_prompt`, {
-        body: JSON.stringify({ prompt: t, amount: 10, indexName: 'verified' }),
+        body: JSON.stringify({
+          prompt: t,
+          amount: 10,
+          indexName: showOnlyVerified ? "verified" : "unverified",
+        }),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -74,6 +80,16 @@ function App() {
           marketplaces lack proper recommendation engines and image
           classification
         </p>
+        <div className="flex justify-end mb-2">
+          <button
+            className={`px-2 rounded-md border-[1px] border-violet-800 ${
+              showOnlyVerified ? `bg-violet-800` : ``
+            }`}
+            onClick={() => setShowOnlyVerified((v) => !v)}
+          >
+            Show verified only
+          </button>
+        </div>
         <div
           className="rounded-lg p-1 bg-no-repeat bg-cover bg-center"
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
@@ -102,10 +118,6 @@ function App() {
         </div>
         {searchData && (
           <div>
-            <div>
-
-            </div>
-          <div>
             <a
               href={`https://www.binance.com/en/nft/search-result?tab=nft&keyword=${encodeURIComponent(
                 term
@@ -113,7 +125,6 @@ function App() {
             >
               Check on Binance
             </a>
-          </div>
           </div>
         )}
         {lastSearchTime && <div>{lastSearchTime} ms</div>}
