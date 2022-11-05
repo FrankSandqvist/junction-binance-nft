@@ -36,12 +36,16 @@ function App() {
 
           const result = [];
 
+          const unique_names: string[] = [];
+
           for (let i = 0; i < names.length; i++) {
+            if(unique_names.includes(names[i])) { break; }
             result.push({
               name: names[i],
               src: urls[i],
               dist: dists[i],
             });
+            unique_names.push(names[i]);
           }
 
           setSearchData(result);
