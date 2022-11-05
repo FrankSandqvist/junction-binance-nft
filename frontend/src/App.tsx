@@ -82,14 +82,12 @@ export const ExampleSearchTerm = (props: {
   onClick: () => any;
 }) => {
   return (
-    <div
-      className="rounded-lg p-[2px] bg-no-repeat bg-cover bg-center hover:scale-105 duration-200"
-      style={{ backgroundImage: 'url("/bg.jpg")' }}
+    <button
+      className="bg-black rounded-md p-2 py-0 border-[1px] border-violet-800 hover:scale-105 duration-150"
+      onClick={props.onClick}
     >
-      <button className="bg-black rounded-md p-2 py-0" onClick={props.onClick}>
-        {props.term}
-      </button>
-    </div>
+      {props.term}
+    </button>
   );
 };
 
