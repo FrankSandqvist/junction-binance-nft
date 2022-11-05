@@ -27,8 +27,8 @@ function App() {
         })
         .then((data: any) => {
           // will decide what to do with this response later
-          console.log(data);
 
+          // response needs to be fixed up... 
           const names = JSON.parse(data.names.replace(/'/g, '"'));
           const urls = JSON.parse(data.urls.replace(/'/g, '"'));
           const dists = JSON.parse(data.dists.replace(/'/g, '"'));
@@ -42,7 +42,6 @@ function App() {
             });
           }
 
-          console.log(result)
           setSearchData(result);
         });
     }
