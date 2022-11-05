@@ -41,6 +41,7 @@ def helloworld():
 @cross_origin()
 def search_by_image():
     content = request.json
+    amount = content['amount']
     if content['type'] == 'base64':
         image_undecoded = content['image']
         img = readb64(image_undecoded)
@@ -50,7 +51,7 @@ def search_by_image():
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = Image.fromarray(img)
     emb = clip_embedder.encode_imgs([img])
-    dists, indexes = indexer.find(emb, topn = 5)
+    dists, indexes = indexer.find(emb, topn = amount)
     loc = df.iloc[indexes]
     return {'dists': str(list(dists)), 'names' : list(loc.Name.values), 'urls': str(list(loc.Url.values)), 'db_size': str(len(df.index))}
 
