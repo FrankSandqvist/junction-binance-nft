@@ -47,7 +47,7 @@ function App() {
           classification
         </p>
         <div
-          className="rounded-lg p-1 bg-no-repeat bg-cover bg-center mb-2"
+          className="rounded-lg p-1 bg-no-repeat bg-cover bg-center"
           style={{ backgroundImage: 'url("/bg.jpg")' }}
         >
           <input
@@ -57,6 +57,10 @@ function App() {
             value={term}
           />
         </div>
+        <div
+          className="rounded-lg bg-no-repeat bg-cover bg-center blur-sm h-1 mb-3 mx-2"
+          style={{ backgroundImage: 'url("/bg.jpg")' }}
+        />
         <div className="flex flex-row mb-4 gap-2">
           <ExampleSearchTerm
             term="Cat"
