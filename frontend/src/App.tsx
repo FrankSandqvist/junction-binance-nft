@@ -23,18 +23,19 @@ const getBase64 = (file: File) =>
 function App() {
   const [term, setTerm] = useState<string>("");
   const [searchData, setSearchData] = useState<any>([]);
+  const [vectorSize, setVectorSize] = useState<null | number>();
   const [lastSearchTime, setLastSearchTime] = useState<null | number>(null);
-  const [showOnlyVerified, setShowOnlyVerified] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const callTextSearchApi = (t: string) => {
     setTerm(t);
     if (t !== "") {
       const timeNow = Number(new Date());
+      setLoading(true);
       fetch(`${BACKEND_URL}/search_by_prompt`, {
         body: JSON.stringify({
           prompt: t,
           amount: 10,
-          indexName: showOnlyVerified ? "verified" : "unverified",
         }),
         headers: {
           Accept: "application/json",
@@ -43,6 +44,7 @@ function App() {
         method: "POST",
       })
         .then((response) => {
+          setLoading(false);
           setLastSearchTime(Number(new Date()) - timeNow);
           return response.json();
         })
@@ -55,12 +57,13 @@ function App() {
 
   const callImageSearchApi = (base64: string) => {
     const timeNow = Number(new Date());
-
+    setLoading(true);
     fetch(`${BACKEND_URL}/search_by_image`, {
       body: base64,
       method: "POST",
     })
       .then((response) => {
+        setLoading(false);
         setLastSearchTime(Number(new Date()) - timeNow);
         return response.json();
       })
@@ -71,7 +74,7 @@ function App() {
 
   const processResponse = (data: any) => {
     // response needs to be fixed up...
-    const names = JSON.parse(data.names.replace(/'/g, '"'));
+    const names = data.names;
     const urls = JSON.parse(data.urls.replace(/'/g, '"'));
     const dists = JSON.parse(data.dists.replace(/'/g, '"'));
 
@@ -81,7 +84,7 @@ function App() {
 
     for (let i = 0; i < names.length; i++) {
       if (unique_names.includes(names[i])) {
-        break;
+        continue;
       }
       result.push({
         name: names[i],
@@ -91,6 +94,7 @@ function App() {
       unique_names.push(names[i]);
     }
 
+    setVectorSize(data.db_size);
     setSearchData(result);
   };
 
@@ -117,28 +121,16 @@ function App() {
           marketplaces lack proper recommendation engines and image
           classification
         </p>
-        <div className="flex justify-end mb-2">
-          <button
-            className={`px-2 rounded-md border-[1px] border-violet-800 ${
-              showOnlyVerified ? `bg-violet-800` : ``
-            }`}
-            onClick={() => setShowOnlyVerified((v) => !v)}
-          >
-            Show verified only
-          </button>
-        </div>
         <div
           className="rounded-lg p-1 bg-no-repeat bg-cover bg-center flex flex-row"
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
         >
-          <input
-            className="w-full text-white bg-black rounded-s mr-2 h-12 rounded-md px-2"
-            placeholder="Start typing..."
-            onChange={(e) => setTerm(e.target.value)}
-            value={term}
-          />
-          <label htmlFor="file-upload" className="w-12 bg-black rounded-md">
+          <label
+            htmlFor="file-upload"
+            className="bg-black rounded-md hover:cursor-pointer flex flex-row text-sm items-center leading-tight"
+          >
             <UploadIcon />
+            <span className="font-bold">TAKE PICTURE</span>
           </label>
           <input
             type="file"
@@ -151,6 +143,13 @@ function App() {
             placeholder="Test"
             id="file-upload"
           />
+                    <input
+            className="w-full text-white bg-black rounded-s ml-2 h-12 rounded-md px-2"
+            placeholder="Upload a picture or write here..."
+            onChange={(e) => setTerm(e.target.value)}
+            value={term}
+          />
+
         </div>
         <div
           className="rounded-lg bg-no-repeat bg-cover bg-center blur-sm h-1 mb-3 mx-2"
@@ -166,20 +165,48 @@ function App() {
             term="Sports car"
             onClick={() => setTerm("sports car")}
           />
+          <ExampleSearchTerm
+            term="Sports car"
+            onClick={() => setTerm("sports car")}
+          />
+          <ExampleSearchTerm
+            term="Sports car"
+            onClick={() => setTerm("sports car")}
+          />
         </div>
         {searchData && (
-          <div>
-            <a
-              href={`https://www.binance.com/en/nft/search-result?tab=nft&keyword=${encodeURIComponent(
-                term
-              )}`}
-            >
-              Check on Binance
-            </a>
+          <div className="flex justify-end mb-4">
+            <div className="flex flex-row rounded-full bg-violet-900 text-sm">
+              {lastSearchTime && (
+                <div className="px-2 border-r-2 border-black">
+                  {lastSearchTime} ms
+                </div>
+              )}
+              {vectorSize && (
+                <div className="px-2 border-r-2 border-black">
+                  {vectorSize} bytes
+                </div>
+              )}
+              {term && (
+                <a
+                  href={`https://www.binance.com/en/nft/search-result?tab=nft&keyword=${encodeURIComponent(
+                    term
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-2"
+                >
+                  See results on Binance
+                </a>
+              )}
+            </div>
           </div>
         )}
-        {lastSearchTime && <div>{lastSearchTime} ms</div>}
-        <div className="grid grid-cols-2 gap-4">
+        <div
+          className={`grid grid-cols-2 gap-4 duration-300 ${
+            loading ? `opacity-50` : ``
+          }`}
+        >
           {searchData.map((sd: any) => (
             <ImageResult
               imageSrc={sd.src}
@@ -223,7 +250,7 @@ export const ImageResult = (props: {
   return (
     <div
       style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
-      className="p-[2px] rounded-sm bg-cover bg-center hover:scale-105 duration-200"
+      className="p-[2px] rounded-sm bg-cover bg-center hover:scale-105 hover:cursor-pointer duration-200"
       onClick={props.onClick}
     >
       <div
@@ -236,9 +263,6 @@ export const ImageResult = (props: {
             <span className="bg-[rgba(0,0,0,0.7)] px-1 rounded-sm">
               <span className="opacity-50">dist</span> {props.dist}
             </span>
-            <span className="bg-[rgba(0,0,0,0.7)] px-1 rounded-sm">
-              <span className="opacity-50">vector size</span> 512bytes
-            </span>
           </div>
         </div>
       </div>
@@ -247,11 +271,15 @@ export const ImageResult = (props: {
 };
 
 const UploadIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 512 512"
+    className="m-2 mr-4 hover:scale-110 duration-200 w-8 h-8"
+  >
     <path
       fill="white"
-      d="M288 109.3V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V109.3l-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352H192c0 35.3 28.7 64 64 64s64-28.7 64-64H448c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V416c0-35.3 28.7-64 64-64zM432 456c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z"
-    />
+      d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 384c-53 0-96-43-96-96s43-96 96-96s96 43 96 96s-43 96-96 96z"
+    />{" "}
   </svg>
 );
 
