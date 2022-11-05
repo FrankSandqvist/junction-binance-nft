@@ -14,7 +14,7 @@ function App() {
     if (t !== "") {
       const timeNow = Number(new Date());
       fetch(`${BACKEND_URL}/search_by_prompt`, {
-        body: JSON.stringify({ prompt: t }),
+        body: JSON.stringify({ prompt: t, amount: 10 }),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
