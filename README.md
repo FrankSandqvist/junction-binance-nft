@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Snoop Doge - NFT search engine 
 
 Snoop Doge is a tool to find relevant NFTs based on image (or text) input.
 
