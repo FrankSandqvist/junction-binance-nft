@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { BACKEND_URL } from "./config";
 
@@ -22,12 +22,20 @@ const getBase64 = (file: File) =>
 
 function App() {
   const [term, setTerm] = useState<string>("");
-  const [searchData, setSearchData] = useState<any>([]);
+  const [snoopData, setSnoopData] = useState<any>([]);
   const [vectorSize, setVectorSize] = useState<null | number>();
-  const [lastSearchTime, setLastSearchTime] = useState<null | number>(null);
+  const [lastSnoopTime, setLastSnoopTime] = useState<null | number>(null);
   const [loading, setLoading] = useState(false);
 
-  const callTextSearchApi = (t: string) => {
+  const snoopSound = useRef<HTMLAudioElement>()
+
+  useEffect(() => {
+    snoopSound.current = new Audio(`${process.env.PUBLIC_URL}/snoop.wav`);
+  }, [])
+
+  const callTextSnoopApi = (t: string) => {
+    snoopSound.current?.play();
+
     setTerm(t);
     if (t !== "") {
       const timeNow = Number(new Date());
@@ -45,7 +53,7 @@ function App() {
       })
         .then((response) => {
           setLoading(false);
-          setLastSearchTime(Number(new Date()) - timeNow);
+          setLastSnoopTime(Number(new Date()) - timeNow);
           return response.json();
         })
         .then((data: any) => {
@@ -55,7 +63,9 @@ function App() {
     }
   };
 
-  const callImageSearchApi = (image: string, isUrl?: boolean) => {
+  const callImageSnoopApi = (image: string, isUrl?: boolean) => {
+    snoopSound.current?.play();
+
     const timeNow = Number(new Date());
     setLoading(true);
     fetch(`${BACKEND_URL}/search_by_image`, {
@@ -70,7 +80,7 @@ function App() {
     })
       .then((response) => {
         setLoading(false);
-        setLastSearchTime(Number(new Date()) - timeNow);
+        setLastSnoopTime(Number(new Date()) - timeNow);
         return response.json();
       })
       .then((data: any) => {
@@ -90,7 +100,7 @@ function App() {
 
     for (let i = 0; i < names.length; i++) {
       if (unique_names.includes(names[i])) {
-        continue;
+        //continue;
       }
       result.push({
         name: names[i],
@@ -101,12 +111,12 @@ function App() {
     }
 
     setVectorSize(data.db_size);
-    setSearchData(result);
+    setSnoopData(result);
   };
 
   useEffect(() => {
     const delayApiCallTimer = setTimeout(() => {
-      callTextSearchApi(term);
+      callTextSnoopApi(term);
     }, 400);
 
     return () => clearTimeout(delayApiCallTimer);
@@ -118,12 +128,12 @@ function App() {
         <img
           className="py-8"
           src={`${process.env.PUBLIC_URL}/logo.png`}
-          width={300}
-          alt="INFINFT"
+          width="60%"
+          alt="SNOOP DOGE"
         />
         <p className="mb-4">
           You probably think NFT's are bullsh*t. Probably, you can't get on
-          searching the marketplace for what you want.
+          snooping the marketplace for what you want.
         </p>
         <p className="mb-8 font-bold">
           Because all NFT marketplaces lack proper recommendation engines and
@@ -146,7 +156,7 @@ function App() {
             type="file"
             onChange={(e) => {
               getBase64((e.target.files as any)[0]).then((base64) =>
-                callImageSearchApi(base64)
+                callImageSnoopApi(base64)
               );
             }}
             className="hidden"
@@ -155,40 +165,44 @@ function App() {
           />
           <input
             className="text-white bg-black rounded-s h-12 rounded-md px-2 md:ml-2 md:w-1/2"
-            placeholder="Or search by text..."
+            placeholder="Or snoop by text..."
             onChange={(e) => setTerm(e.target.value)}
             value={term}
           />
         </div>
         <div
-          className="rounded-lg bg-no-repeat bg-cover bg-center blur-sm h-1 mb-3 mx-2"
+          className="rounded-lg bg-no-repeat bg-cover bg-center blur-md h-1 mb-3 mx-2"
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
         />
-        <div className="flex flex-row mb-4 gap-2 flex-wrap">
-          <ExampleSearchTerm term="Cat" onClick={() => setTerm("cat")} />
-          <ExampleSearchTerm
+        <div className="flex flex-row mb-4 gap-1 flex-wrap">
+          <ExampleSnoopTerm term="Pixelated cat" onClick={() => setTerm("pixelated cat")} />
+          <ExampleSnoopTerm
             term="Duck with tattoos"
             onClick={() => setTerm("duck with tattoos")}
           />
-          <ExampleSearchTerm
+          <ExampleSnoopTerm
             term="Bored monkey"
             onClick={() => setTerm("bored monkey")}
           />
-          <ExampleSearchTerm
+          <ExampleSnoopTerm
             term="Doge with sunglasses"
             onClick={() => setTerm("doge with sunglasses")}
           />
-          <ExampleSearchTerm
+          <ExampleSnoopTerm
             term="Cyberpunk"
             onClick={() => setTerm("cyberpunk")}
           />
-          <ExampleSearchTerm
+          <ExampleSnoopTerm
             term="Van Gogh"
             onClick={() => setTerm("van gogh")}
           />
-          <ExampleSearchTerm
+          <ExampleSnoopTerm
             term="Hacker"
             onClick={() => setTerm("hacker")}
+          />
+          <ExampleSnoopTerm
+            term="Matryoshka"
+            onClick={() => setTerm("matryoshka")}
           />
         </div>
         {loading && (
@@ -198,22 +212,22 @@ function App() {
             </div>
           </div>
         )}
-        {!loading && searchData && (
+        {!loading && snoopData && (
           <div className="flex justify-end mb-4">
             <div className="flex flex-row rounded-full bg-violet-900 text-sm">
-              {lastSearchTime && (
+              {lastSnoopTime && (
                 <div className="px-2 border-r-2 border-black">
-                  {lastSearchTime} ms
+                  {lastSnoopTime} ms
                 </div>
               )}
               {vectorSize && (
                 <div className="px-2 border-r-2 border-black">
-                  {vectorSize} bytes
+                  {vectorSize} images indexed
                 </div>
               )}
               {term && (
                 <a
-                  href={`https://www.binance.com/en/nft/search-result?tab=nft&keyword=${encodeURIComponent(
+                  href={`https://www.binance.com/en/nft/snoop-result?tab=nft&keyword=${encodeURIComponent(
                     term
                   )}`}
                   target="_blank"
@@ -231,13 +245,13 @@ function App() {
             loading ? `opacity-50` : ``
           }`}
         >
-          {searchData.map((sd: any) => (
+          {snoopData.map((sd: any) => (
             <ImageResult
               imageSrc={sd.src}
               name={sd.name}
               dist={sd.dist}
               onClick={() => {
-                callImageSearchApi(sd.src, true);
+                callImageSnoopApi(sd.src, true);
               }}
             />
           ))}
@@ -247,7 +261,7 @@ function App() {
   );
 }
 
-export const ExampleSearchTerm = (props: {
+export const ExampleSnoopTerm = (props: {
   term: string;
   onClick: () => any;
 }) => {
