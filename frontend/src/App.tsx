@@ -127,10 +127,12 @@ function App() {
         >
           <label
             htmlFor="file-upload"
-            className="bg-black rounded-md hover:cursor-pointer flex flex-row text-sm items-center leading-tight"
+            className="bg-black rounded-md hover:cursor-pointer flex flex-row items-center justify-center w-1/2 hover:scale-95 duration-200"
           >
             <UploadIcon />
-            <span className="font-bold">TAKE PICTURE</span>
+            <span className="font-bold text-md leading-tight md:text-lg">
+              TAKE A PICTURE
+            </span>
           </label>
           <input
             type="file"
@@ -143,13 +145,12 @@ function App() {
             placeholder="Test"
             id="file-upload"
           />
-                    <input
-            className="w-full text-white bg-black rounded-s ml-2 h-12 rounded-md px-2"
-            placeholder="Upload a picture or write here..."
+          <input
+            className="text-white bg-black rounded-s ml-2 h-12 rounded-md px-2 w-1/2"
+            placeholder="Or search by text..."
             onChange={(e) => setTerm(e.target.value)}
             value={term}
           />
-
         </div>
         <div
           className="rounded-lg bg-no-repeat bg-cover bg-center blur-sm h-1 mb-3 mx-2"
@@ -158,8 +159,8 @@ function App() {
         <div className="flex flex-row mb-4 gap-2">
           <ExampleSearchTerm term="Cat" onClick={() => setTerm("cat")} />
           <ExampleSearchTerm
-            term="Duck with green hair"
-            onClick={() => setTerm("duck with green hair")}
+            term="Duck with tattoos"
+            onClick={() => setTerm("duck with tattoos")}
           />
           <ExampleSearchTerm
             term="Sports car"
@@ -274,7 +275,7 @@ const UploadIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
-    className="m-2 mr-4 hover:scale-110 duration-200 w-8 h-8"
+    className="m-2 mr-4 w-8 h-8"
   >
     <path
       fill="white"
