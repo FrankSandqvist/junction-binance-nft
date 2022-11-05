@@ -29,23 +29,22 @@ def search_by_image():
     dists, indexes = indexer.find(emb, topn = 5)
     ##reverse image bgr rgb
     return dists, indexes
-    
-    
+
+
 @app.route('/search_by_prompt', methods=['POST'])
 @cross_origin()
 def search_by_prompt():
     content = request.json
-    print(content)
     prompt = content['prompt']
+    amount = content['amount']
     emb = clip_embedder.encode_text(prompt)
-    dists, indexes = indexer.find(emb,topn = 5)
-    return {'dists':str(dists), 'indexes':str(indexes)}
-    
+    dists, indexes = indexer.find(emb,topn = amount)
+    loc = df.iloc[indexes]
+    return {'dists': str(list(dists)), 'names' : str(list(loc.Name.values)), 'urls': str(list(loc.Url.values))}
+    #return {'dists':str(dists), 'indexes':str(indexes)}
+
 
 if __name__ == '__main__':
     print("Starting server on port 8000")
     app.run(host="0.0.0.0", port=8000)
-    
-    
-    
-    
+
