@@ -9,6 +9,7 @@ function App() {
   const [searchData, setSearchData] = useState<any>([]);
 
   const callTextSearchApi = (t: string) => {
+    setTerm(t);
     if (t !== "") {
       fetch(`${BACKEND_URL}/search_by_prompt`, {
         body: JSON.stringify({ prompt: t }),
@@ -46,7 +47,7 @@ function App() {
           classification
         </p>
         <div
-          className="rounded-lg p-1 bg-no-repeat bg-cover bg-center"
+          className="rounded-lg p-1 bg-no-repeat bg-cover bg-center mb-2"
           style={{ backgroundImage: 'url("/bg.jpg")' }}
         >
           <input
@@ -56,9 +57,40 @@ function App() {
             value={term}
           />
         </div>
+        <div className="flex flex-row mb-4 gap-2">
+          <ExampleSearchTerm
+            term="Cat"
+            onClick={() => callTextSearchApi("cat")}
+          />
+          <ExampleSearchTerm
+            term="Duck with green hair"
+            onClick={() => callTextSearchApi("duck with green hair")}
+          />
+          <ExampleSearchTerm
+            term="Sports car"
+            onClick={() => callTextSearchApi("sports car")}
+          />
+        </div>
+        <div>{JSON.stringify(searchData)}</div>
       </main>
     </div>
   );
 }
+
+export const ExampleSearchTerm = (props: {
+  term: string;
+  onClick: () => any;
+}) => {
+  return (
+    <div
+      className="rounded-lg p-[2px] bg-no-repeat bg-cover bg-center hover:scale-105 duration-200"
+      style={{ backgroundImage: 'url("/bg.jpg")' }}
+    >
+      <button className="bg-black rounded-md p-2 py-0" onClick={props.onClick}>
+        {props.term}
+      </button>
+    </div>
+  );
+};
 
 export default App;
