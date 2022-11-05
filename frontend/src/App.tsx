@@ -4,7 +4,21 @@ import { useEffect, useState } from "react";
 
 import { BACKEND_URL } from "./config";
 
-const blobFromUrl = () => {};
+const blobFromUrl = async (url: string) => {
+  return fetch(url).then((res) => res.blob()); // Gets the response and returns it as a blob
+};
+
+const getBase64 = (file: File) =>
+  new Promise<string>((res, rej) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      res(reader.result as string);
+    };
+    reader.onerror = function (error) {
+      rej(error);
+    };
+  });
 
 function App() {
   const [term, setTerm] = useState<string>("");
@@ -34,29 +48,50 @@ function App() {
         })
         .then((data: any) => {
           // will decide what to do with this response later
-
-          // response needs to be fixed up...
-          const names = JSON.parse(data.names.replace(/'/g, '"'));
-          const urls = JSON.parse(data.urls.replace(/'/g, '"'));
-          const dists = JSON.parse(data.dists.replace(/'/g, '"'));
-
-          const result = [];
-
-          const unique_names: string[] = [];
-
-          for (let i = 0; i < names.length; i++) {
-            if(unique_names.includes(names[i])) { break; }
-            result.push({
-              name: names[i],
-              src: urls[i],
-              dist: dists[i],
-            });
-            unique_names.push(names[i]);
-          }
-
-          setSearchData(result);
+          processResponse(data);
         });
     }
+  };
+
+  const callImageSearchApi = (base64: string) => {
+    const timeNow = Number(new Date());
+
+    fetch(`${BACKEND_URL}/search_by_image`, {
+      body: base64,
+      method: "POST",
+    })
+      .then((response) => {
+        setLastSearchTime(Number(new Date()) - timeNow);
+        return response.json();
+      })
+      .then((data: any) => {
+        processResponse(data);
+      });
+  };
+
+  const processResponse = (data: any) => {
+    // response needs to be fixed up...
+    const names = JSON.parse(data.names.replace(/'/g, '"'));
+    const urls = JSON.parse(data.urls.replace(/'/g, '"'));
+    const dists = JSON.parse(data.dists.replace(/'/g, '"'));
+
+    const result = [];
+
+    const unique_names: string[] = [];
+
+    for (let i = 0; i < names.length; i++) {
+      if (unique_names.includes(names[i])) {
+        break;
+      }
+      result.push({
+        name: names[i],
+        src: urls[i],
+        dist: dists[i],
+      });
+      unique_names.push(names[i]);
+    }
+
+    setSearchData(result);
   };
 
   useEffect(() => {
@@ -66,8 +101,6 @@ function App() {
 
     return () => clearTimeout(delayApiCallTimer);
   }, [term]);
-
-  console.log(searchData);
 
   return (
     <div className="bg-[#10081B] text-white absolute h-full w-full overflow-x-auto">
@@ -79,8 +112,8 @@ function App() {
           alt="INFINIFT"
         />
         <p className="mb-8">
-          You probably think NFT's are bullsh*t. That's because you've been
-          recommended any nice NFT art that you like. Because all NFT
+          You probably think NFT's are bullsh*t. Probably, you can't get on
+          searching the marketplace for what you want. Because all NFT
           marketplaces lack proper recommendation engines and image
           classification
         </p>
@@ -95,7 +128,7 @@ function App() {
           </button>
         </div>
         <div
-          className="rounded-lg p-1 bg-no-repeat bg-cover bg-center"
+          className="rounded-lg p-1 bg-no-repeat bg-cover bg-center flex flex-row"
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
         >
           <input
@@ -103,6 +136,20 @@ function App() {
             placeholder="Start typing..."
             onChange={(e) => setTerm(e.target.value)}
             value={term}
+          />
+          <label htmlFor="file-upload" className="w-12 bg-black rounded-md">
+            <UploadIcon />
+          </label>
+          <input
+            type="file"
+            onChange={(e) => {
+              getBase64((e.target.files as any)[0]).then((base64) =>
+                callImageSearchApi(base64)
+              );
+            }}
+            className="hidden"
+            placeholder="Test"
+            id="file-upload"
           />
         </div>
         <div
@@ -134,7 +181,18 @@ function App() {
         {lastSearchTime && <div>{lastSearchTime} ms</div>}
         <div className="grid grid-cols-2 gap-4">
           {searchData.map((sd: any) => (
-            <ImageResult imageSrc={sd.src} name={sd.name} dist={sd.dist} />
+            <ImageResult
+              imageSrc={sd.src}
+              name={sd.name}
+              dist={sd.dist}
+              onClick={() => {
+                blobFromUrl(sd.src).then((blob) =>
+                  getBase64(blob as any).then((base64) =>
+                    callImageSearchApi(base64)
+                  )
+                );
+              }}
+            />
           ))}
         </div>
       </main>
@@ -160,11 +218,13 @@ export const ImageResult = (props: {
   imageSrc: string;
   name: string;
   dist: number;
+  onClick: () => any;
 }) => {
   return (
     <div
       style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
       className="p-[2px] rounded-sm bg-cover bg-center hover:scale-105 duration-200"
+      onClick={props.onClick}
     >
       <div
         className="bg-black h-64 bg-cover relative border-[1px] border-[rgba(0,0,0,0.7)]"
@@ -185,5 +245,14 @@ export const ImageResult = (props: {
     </div>
   );
 };
+
+const UploadIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <path
+      fill="white"
+      d="M288 109.3V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V109.3l-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352H192c0 35.3 28.7 64 64 64s64-28.7 64-64H448c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V416c0-35.3 28.7-64 64-64zM432 456c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z"
+    />
+  </svg>
+);
 
 export default App;
