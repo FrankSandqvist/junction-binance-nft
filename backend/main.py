@@ -49,7 +49,7 @@ def search_by_image():
     dists, indexes = indexer.find(emb, topn = 5)
     ##reverse image bgr rgb
     loc = df.iloc[indexes]
-    return {'dists': str(list(dists)), 'names' : str(list(loc.Name.values)), 'urls': str(list(loc.Url.values))}
+    return {'dists': str(list(dists)), 'names' : list(loc.Name.values), 'urls': str(list(loc.Url.values)),  'db_size': str(len(df.index))}
 
 
 @app.route('/search_by_prompt', methods=['POST'])
@@ -61,7 +61,7 @@ def search_by_prompt():
     emb = clip_embedder.encode_text(prompt)
     dists, indexes = indexer.find(emb,topn = amount)
     loc = df.iloc[indexes]
-    return {'dists': str(list(dists)), 'names' : str(list(loc.Name.values)), 'urls': str(list(loc.Url.values)), 'db_size': str(len(df.index))}
+    return {'dists': str(list(dists)), 'names' : list(loc.Name.values), 'urls': str(list(loc.Url.values)), 'db_size': str(len(df.index))}
     #return {'dists':str(dists), 'indexes':str(indexes)}
 
 
