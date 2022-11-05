@@ -28,7 +28,7 @@ function App() {
         .then((data: any) => {
           // will decide what to do with this response later
 
-          // response needs to be fixed up... 
+          // response needs to be fixed up...
           const names = JSON.parse(data.names.replace(/'/g, '"'));
           const urls = JSON.parse(data.urls.replace(/'/g, '"'));
           const dists = JSON.parse(data.dists.replace(/'/g, '"'));
@@ -55,7 +55,7 @@ function App() {
     return () => clearTimeout(delayApiCallTimer);
   }, [term]);
 
-  console.log(searchData)
+  console.log(searchData);
 
   return (
     <div className="bg-[#10081B] text-white absolute h-full w-full overflow-x-auto">
@@ -105,7 +105,7 @@ function App() {
           </div>
         )}
         {lastSearchTime && <div>{lastSearchTime} ms</div>}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-4">
           {searchData.map((sd: any) => (
             <ImageResult imageSrc={sd.src} name={sd.name} dist={sd.dist} />
           ))}
@@ -137,16 +137,21 @@ export const ImageResult = (props: {
   return (
     <div
       style={{ backgroundImage: 'url("/bg.jpg")' }}
-      className="p-1 rounded-md bg-cover"
+      className="p-[2px] rounded-sm bg-cover bg-center hover:scale-105 duration-200"
     >
       <div
-        className="bg-black rounded-md h-64 bg-cover relative"
+        className="bg-black h-64 bg-cover relative border-[1px] border-[rgba(0,0,0,0.7)]"
         style={{ backgroundImage: `url(${props.imageSrc})` }}
       >
         <div className="absolute w-full h-full from-transparent to-[rgba(0,0,0,0.5)] bg-gradient-to-b flex items-end justify-end p-2 flex-col">
           {props.name}
-          <div className="text-sm bg-[rgba(0,0,0,0.7)] px-1 text-white rounded-sm">
-            <span className="opacity-50">dist</span> {props.dist}
+          <div className="text-sm text-white flex flex-row gap-2">
+            <span className="bg-[rgba(0,0,0,0.7)] px-1 rounded-sm">
+              <span className="opacity-50">dist</span> {props.dist}
+            </span>
+            <span  className="bg-[rgba(0,0,0,0.7)] px-1 rounded-sm">
+              <span className="opacity-50">vector size</span> 512bytes
+            </span>
           </div>
         </div>
       </div>
