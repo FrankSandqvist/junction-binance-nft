@@ -192,10 +192,6 @@ function App() {
             onClick={() => setTerm("pixelated cat")}
           />
           <ExampleSnoopTerm
-            term="Duck with tattoos"
-            onClick={() => setTerm("duck with tattoos")}
-          />
-          <ExampleSnoopTerm
             term="Bored monkey"
             onClick={() => setTerm("bored monkey")}
           />
@@ -212,10 +208,7 @@ function App() {
             onClick={() => setTerm("van gogh")}
           />
           <ExampleSnoopTerm term="Hacker" onClick={() => setTerm("hacker")} />
-          <ExampleSnoopTerm
-            term="Snoop"
-            onClick={() => setTerm("snoop")}
-          />
+          <ExampleSnoopTerm term="Snoop" onClick={() => setTerm("snoop")} />
         </div>
         {loading && (
           <div className="flex justify-end mb-4">
@@ -278,7 +271,8 @@ function App() {
           ))}
         </div>
         <p className="mb-4 text-sm">
-          Snoop Doge works by AI indexing all uploaded NFT's. You can check out our code in our{" "}
+          Snoop Doge works by AI indexing all uploaded NFT's. You can check out
+          our code in our{" "}
           <a
             href="https://github.com/FrankSandqvist/junction-binance-nft"
             className="underline"
