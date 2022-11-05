@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/junction-binance-nft/static/css/main.fb054ad5.css",
-    "main.js": "/junction-binance-nft/static/js/main.f18b962f.js",
+    "main.css": "/junction-binance-nft/static/css/main.dc46e31f.css",
+    "main.js": "/junction-binance-nft/static/js/main.5eb43ca7.js",
     "static/js/787.cda612ba.chunk.js": "/junction-binance-nft/static/js/787.cda612ba.chunk.js",
     "index.html": "/junction-binance-nft/index.html",
-    "main.fb054ad5.css.map": "/junction-binance-nft/static/css/main.fb054ad5.css.map",
-    "main.f18b962f.js.map": "/junction-binance-nft/static/js/main.f18b962f.js.map",
+    "main.dc46e31f.css.map": "/junction-binance-nft/static/css/main.dc46e31f.css.map",
+    "main.5eb43ca7.js.map": "/junction-binance-nft/static/js/main.5eb43ca7.js.map",
     "787.cda612ba.chunk.js.map": "/junction-binance-nft/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fb054ad5.css",
-    "static/js/main.f18b962f.js"
+    "static/css/main.dc46e31f.css",
+    "static/js/main.5eb43ca7.js"
   ]
 }
