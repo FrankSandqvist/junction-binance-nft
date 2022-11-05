@@ -164,23 +164,31 @@ function App() {
           className="rounded-lg bg-no-repeat bg-cover bg-center blur-sm h-1 mb-3 mx-2"
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
         />
-        <div className="flex flex-row mb-4 gap-2">
+        <div className="flex flex-row mb-4 gap-2 flex-wrap">
           <ExampleSearchTerm term="Cat" onClick={() => setTerm("cat")} />
           <ExampleSearchTerm
             term="Duck with tattoos"
             onClick={() => setTerm("duck with tattoos")}
           />
           <ExampleSearchTerm
-            term="Sports car"
-            onClick={() => setTerm("sports car")}
+            term="Bored monkey"
+            onClick={() => setTerm("bored monkey")}
           />
           <ExampleSearchTerm
-            term="Sports car"
-            onClick={() => setTerm("sports car")}
+            term="Doge with sunglasses"
+            onClick={() => setTerm("doge with sunglasses")}
           />
           <ExampleSearchTerm
-            term="Sports car"
-            onClick={() => setTerm("sports car")}
+            term="Cyberpunk"
+            onClick={() => setTerm("cyberpunk")}
+          />
+          <ExampleSearchTerm
+            term="Van Gogh"
+            onClick={() => setTerm("van gogh")}
+          />
+          <ExampleSearchTerm
+            term="Hacker"
+            onClick={() => setTerm("hacker")}
           />
         </div>
         {loading && (
@@ -245,7 +253,7 @@ export const ExampleSearchTerm = (props: {
 }) => {
   return (
     <button
-      className="bg-black rounded-md p-2 py-0 border-[1px] border-violet-800 hover:scale-105 duration-150"
+      className="bg-black text-sm rounded-md p-2 py-0 border-[1px] border-violet-800 hover:scale-105 duration-150 whitespace-nowrap"
       onClick={props.onClick}
     >
       {props.term}
