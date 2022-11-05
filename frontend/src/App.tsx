@@ -256,7 +256,7 @@ function App() {
           src={`${process.env.PUBLIC_URL}/doge.png`}
           width="200"
           height="200"
-          className={`fixed z-10 left-0 top-0 ${
+          className={`fixed z-10 left-0 bottom-0 ${
             moveDoge ? "opacity-100" : "opacity-0 -translate-x-10"
           } duration-500 pointer-events-none`}
           alt="snooping"
