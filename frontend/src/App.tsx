@@ -232,14 +232,14 @@ function App() {
               )}
               {term && (
                 <a
-                  href={`https://www.binance.com/en/nft/snoop-result?tab=nft&keyword=${encodeURIComponent(
+                  href={`https://www.binance.com/en/nft/search-result?tab=nft&keyword=${encodeURIComponent(
                     term
                   )}`}
                   target="_blank"
                   rel="noreferrer"
                   className="px-2"
                 >
-                  See results on Binance
+                  Compare w/ Binance
                 </a>
               )}
             </div>
@@ -249,9 +249,9 @@ function App() {
           src={`${process.env.PUBLIC_URL}/doge.png`}
           width="200"
           height="200"
-          className={`fixed z-10 left-0 top-0 ${
+          className={`fixed z-10 left-0 top-0 duration-500 pointer-events-none ${
             moveDoge ? "opacity-100" : "opacity-0 -translate-x-10"
-          } duration-500 pointer-events-none`}
+          }`}
           alt="snooping"
         />
         <div
@@ -316,7 +316,7 @@ export const ImageResult = (props: {
         className="bg-black h-64 bg-cover relative border-[1px] border-[rgba(0,0,0,0.7)]"
         style={{ backgroundImage: `url(${props.imageSrc}` }}
       >
-        <div className="absolute w-full h-full from-transparent to-[rgba(0,0,0,0.5)] bg-gradient-to-b flex items-end justify-end p-2 flex-col">
+        <div className="absolute w-full h-full from-transparent to-[rgba(0,0,0,0.5)] bg-gradient-to-b flex items-end justify-end p-2 flex-col text-right">
           {props.name}
           <div className="text-sm text-white flex flex-row gap-1 flex-wrap items-end justify-end">
             <span className="bg-[rgba(0,0,0,0.7)] px-1 rounded-sm">
