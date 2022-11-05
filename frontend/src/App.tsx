@@ -26,16 +26,17 @@ function App() {
   const [vectorSize, setVectorSize] = useState<null | number>();
   const [lastSnoopTime, setLastSnoopTime] = useState<null | number>(null);
   const [loading, setLoading] = useState(false);
+  const [soundPlayed, setSoundPlayed] = useState(false);
+  const [moveDoge, setMoveDoge] = useState(false);
 
-  const snoopSound = useRef<HTMLAudioElement>()
+  const snoopSound = useRef<HTMLAudioElement>();
 
   useEffect(() => {
     snoopSound.current = new Audio(`${process.env.PUBLIC_URL}/snoop.wav`);
-  }, [])
+    snoopSound.current.volume = 0.5;
+  }, []);
 
   const callTextSnoopApi = (t: string) => {
-    snoopSound.current?.play();
-
     setTerm(t);
     if (t !== "") {
       const timeNow = Number(new Date());
@@ -64,7 +65,15 @@ function App() {
   };
 
   const callImageSnoopApi = (image: string, isUrl?: boolean) => {
-    snoopSound.current?.play();
+    if (!soundPlayed || Math.random() > 0.6) {
+      snoopSound.current?.play();
+      setSoundPlayed(true);
+      setMoveDoge(true);
+
+      setTimeout(() => {
+        setMoveDoge(false);
+      }, 3000);
+    }
 
     const timeNow = Number(new Date());
     setLoading(true);
@@ -175,7 +184,10 @@ function App() {
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
         />
         <div className="flex flex-row mb-4 gap-1 flex-wrap">
-          <ExampleSnoopTerm term="Pixelated cat" onClick={() => setTerm("pixelated cat")} />
+          <ExampleSnoopTerm
+            term="Pixelated cat"
+            onClick={() => setTerm("pixelated cat")}
+          />
           <ExampleSnoopTerm
             term="Duck with tattoos"
             onClick={() => setTerm("duck with tattoos")}
@@ -196,10 +208,7 @@ function App() {
             term="Van Gogh"
             onClick={() => setTerm("van gogh")}
           />
-          <ExampleSnoopTerm
-            term="Hacker"
-            onClick={() => setTerm("hacker")}
-          />
+          <ExampleSnoopTerm term="Hacker" onClick={() => setTerm("hacker")} />
           <ExampleSnoopTerm
             term="Matryoshka"
             onClick={() => setTerm("matryoshka")}
@@ -208,7 +217,7 @@ function App() {
         {loading && (
           <div className="flex justify-end mb-4">
             <div className="flex flex-row rounded-full bg-violet-900 text-sm px-4">
-               Loading...
+              Loading...
             </div>
           </div>
         )}
@@ -240,6 +249,15 @@ function App() {
             </div>
           </div>
         )}
+        <img
+          src={`${process.env.PUBLIC_URL}/doge.png`}
+          width="200"
+          height="200"
+          className={`fixed z-10 left-0 top-0 ${
+            moveDoge ? "opacity-100" : "opacity-0 -translate-x-10"
+          } duration-500 pointer-events-none`}
+          alt="snooping"
+        />
         <div
           className={`grid grid-cols-2 gap-4 duration-300 ${
             loading ? `opacity-50` : ``
