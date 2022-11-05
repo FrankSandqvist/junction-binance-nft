@@ -79,7 +79,9 @@ function App() {
     setLoading(true);
     fetch(`${BACKEND_URL}/search_by_image`, {
       body: JSON.stringify(
-        isUrl ? { type: "url", image } : { type: "base64", image }
+        isUrl
+          ? { type: "url", image, amount: 10 }
+          : { type: "base64", image, amount: 10 }
       ),
       headers: {
         Accept: "application/json",
@@ -140,14 +142,15 @@ function App() {
           width="60%"
           alt="SNOOP DOGE"
         />
+        <p className="mb-4 font-bold">
+          You probably think NFT's are bullsh*t. You won't with Snoop Doge by
+          your side.
+        </p>
         <p className="mb-4">
-          You probably think NFT's are bullsh*t. Probably, you can't get on
-          snooping the marketplace for what you want.
+          Take a photo (or type a description) and find a magnificent NFT that
+          matches it. You can also click the resulting NFT's to snoop further!
         </p>
-        <p className="mb-8 font-bold">
-          Because all NFT marketplaces lack proper recommendation engines and
-          image classification.
-        </p>
+        <p className="mb-8 font-bold"></p>
         <div
           className="rounded-lg p-1 bg-no-repeat bg-cover bg-center flex flex-col md:flex-row"
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
@@ -210,8 +213,8 @@ function App() {
           />
           <ExampleSnoopTerm term="Hacker" onClick={() => setTerm("hacker")} />
           <ExampleSnoopTerm
-            term="Matryoshka"
-            onClick={() => setTerm("matryoshka")}
+            term="Snoop"
+            onClick={() => setTerm("snoop")}
           />
         </div>
         {loading && (
@@ -259,7 +262,7 @@ function App() {
           alt="snooping"
         />
         <div
-          className={`grid grid-cols-2 gap-4 duration-300 ${
+          className={`grid grid-cols-2 gap-4 duration-300 mb-8 ${
             loading ? `opacity-50` : ``
           }`}
         >
@@ -274,6 +277,16 @@ function App() {
             />
           ))}
         </div>
+        <p className="mb-4 text-sm">
+          Snoop Doge works by AI indexing all uploaded NFT's. You can check out our code in our{" "}
+          <a
+            href="https://github.com/FrankSandqvist/junction-binance-nft"
+            className="underline"
+          >
+            Github Repo
+          </a>
+          .
+        </p>
       </main>
     </div>
   );

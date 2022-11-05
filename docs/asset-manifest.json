@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/junction-binance-nft/static/css/main.9d896a68.css",
-    "main.js": "/junction-binance-nft/static/js/main.7b477306.js",
+    "main.css": "/junction-binance-nft/static/css/main.e05b7149.css",
+    "main.js": "/junction-binance-nft/static/js/main.a7c46d17.js",
     "index.html": "/junction-binance-nft/index.html",
-    "main.9d896a68.css.map": "/junction-binance-nft/static/css/main.9d896a68.css.map",
-    "main.7b477306.js.map": "/junction-binance-nft/static/js/main.7b477306.js.map"
+    "main.e05b7149.css.map": "/junction-binance-nft/static/css/main.e05b7149.css.map",
+    "main.a7c46d17.js.map": "/junction-binance-nft/static/js/main.a7c46d17.js.map"
   },
   "entrypoints": [
-    "static/css/main.9d896a68.css",
-    "static/js/main.7b477306.js"
+    "static/css/main.e05b7149.css",
+    "static/js/main.a7c46d17.js"
   ]
 }
