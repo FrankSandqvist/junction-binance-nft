@@ -8,13 +8,14 @@ function App() {
   const [term, setTerm] = useState<string>("");
   const [searchData, setSearchData] = useState<any>([]);
   const [lastSearchTime, setLastSearchTime] = useState<null | number>(null);
+  const [showOnlyVerified, setShowOnlyVerified] = useState(false);
 
   const callTextSearchApi = (t: string) => {
     setTerm(t);
     if (t !== "") {
       const timeNow = Number(new Date());
       fetch(`${BACKEND_URL}/search_by_prompt`, {
-        body: JSON.stringify({ prompt: t, amount: 10 }),
+        body: JSON.stringify({ prompt: t, amount: 10, indexName: 'verified' }),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -34,6 +35,7 @@ function App() {
           const dists = JSON.parse(data.dists.replace(/'/g, '"'));
 
           const result = [];
+
           for (let i = 0; i < names.length; i++) {
             result.push({
               name: names[i],
@@ -100,6 +102,10 @@ function App() {
         </div>
         {searchData && (
           <div>
+            <div>
+
+            </div>
+          <div>
             <a
               href={`https://www.binance.com/en/nft/search-result?tab=nft&keyword=${encodeURIComponent(
                 term
@@ -107,6 +113,7 @@ function App() {
             >
               Check on Binance
             </a>
+          </div>
           </div>
         )}
         {lastSearchTime && <div>{lastSearchTime} ms</div>}
