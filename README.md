@@ -39,6 +39,18 @@ Runs the app in the development mode. Open [http://localhost:3000](http://localh
 
 ---
 
+### Team:
+- [Vladimir Kiliazov](https://github.com/vladimirwest)
+
+- [Andrew Trofimov](https://github.com/AnyTrofi)
+
+- [Frank Sandqvist](https://github.com/FrankSandqvist)
+
+- Linas Vastakas(linas.vastakas@gmail.com)
+
+- Habib Ahmed(ihaabi@gmail.com)
+
+
 
 
 
