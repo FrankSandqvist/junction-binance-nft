@@ -6,7 +6,7 @@ To make it work, we have indexed a [Binance](https://www.binance.com/en/nft/home
 ![](https://github.com/FrankSandqvist/junction-binance-nft/blob/main/assets/nft-snoopdoge.001.jpeg)
 
 
-## About:
+### About:
 ---
 #### Problem:
 The product addresses the need for effective real-time NFT search and indexing. The NFT industry is projected to grow up to twenty-fold in the next ten years. Users will want to find NFTs based on their everyday interests and environments. The market needs to create user-friendly and smart tools to prepare for and facilitate the upcoming mainstream adoption of NFTs, and that is what we are aiming to do.  
