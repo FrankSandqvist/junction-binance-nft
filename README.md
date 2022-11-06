@@ -19,4 +19,4 @@ Runs the app in the development mode. Open [http://localhost:3000](http://localh
 
 You will need to install the plugins
 
-`flask run`
+`python main.py`
