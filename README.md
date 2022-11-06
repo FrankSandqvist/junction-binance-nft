@@ -1,5 +1,7 @@
 # Snoop Doge - NFT search engine 
 
+#### Screencast:
+
 Snoop Doge is a real-time search indexing solution where users can find NFTs using image or text. The data is pre-processed on a variety of image and text pairs with [CLIP, a pre-trained neural network](https://github.com/mlfoundations/open_clip). We perform instant search among nearly ten thousand (and counting) NFTs across multiple platforms.
 To make it work, we have indexed a [Binance](https://www.binance.com/en/nft/home) and [NFT Showroom](https://nftshowroom.com/) websites.
 
