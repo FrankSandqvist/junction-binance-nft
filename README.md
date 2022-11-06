@@ -17,7 +17,7 @@ Snoop Doge is a real-time search indexing solution where users can easily find N
 #### Technical Details:
 ![](https://github.com/FrankSandqvist/junction-binance-nft/blob/main/assets/nft-snoopdoge.002.jpeg)
 The data is pre-processed on a variety of image and text pairs with CLIP (Contrastive Language-Image Pre-Training), a pre-trained neural network. The model returns an embedding vector for each image or text string, and this vector can be compared with the pre-processed vectors in the database to find top-n similar items. We provide more accurate results and do not rely on heavy GPU setup, hence reducing the cost. Our response time averages between 100-200 ms per query on our modest 8-core standard cloud instance. The tool is easily scalable through the extension of the search database up to a couple million images. The use of the approximate nearest neighbors guarantees excellent search times as we scale. Our search engine can be further improved by reducing the size of the generated vectors, improvement of the Clip model image cropping area, and integrating the previous user search and NFT purchase behaviour. 
-* [mlfoundations/open_clip](https://github.com/mlfoundations/open_clip) - Open source implementation of OpenAI's CLIP  - ViT-B/16+ pre-trained on LAION-400M was used for this demo.
+* [mlfoundations/open_clip](https://github.com/mlfoundations/open_clip) - Open source implementation of OpenAI's CLIP  - ViT-B/16+ pre-trained on LAION-400M was used for this project.
 
 ### Demo Link
 ---
