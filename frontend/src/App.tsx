@@ -136,12 +136,16 @@ function App() {
   return (
     <div className="bg-[#10081B] text-white absolute h-full w-full overflow-x-auto">
       <main className="w-full ml-auto mr-auto px-4 md:w-[40rem]">
-        <img
-          className="py-8"
-          src={`${process.env.PUBLIC_URL}/logo.png`}
-          width="60%"
-          alt="SNOOP DOGE"
-        />
+        <a href="https://franksandqvist.github.io/junction-binance-nft/">
+          {" "}
+          <img
+            className="py-8"
+            src={`${process.env.PUBLIC_URL}/logo.png`}
+            width="60%"
+            alt="SNOOP DOGE"
+          />
+        </a>
+
         <p className="mb-4 font-bold">
           You probably think NFT's are bullsh*t. You won't with Snoop Doge by
           your side.
@@ -193,8 +197,8 @@ function App() {
           />
 
           <ExampleSnoopTerm
-            term="Doge with sunglasses"
-            onClick={() => setTerm("doge with sunglasses")}
+            term="Elon musk"
+            onClick={() => setTerm("elon musk")}
           />
 
           <ExampleSnoopTerm
