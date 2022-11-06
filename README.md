@@ -1,6 +1,7 @@
 # Snoop Doge - NFT search engine 
 
-#### Screencast:
+---
+### Screencast:
 ![screencast](https://user-images.githubusercontent.com/90638222/200160205-3d15472b-c626-4528-a64b-1b7845415e40.gif)
 
 
