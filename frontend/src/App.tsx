@@ -216,8 +216,16 @@ function App() {
             onClick={() => setTerm("cyberpunk")}
           />
           <ExampleSnoopTerm
-            term="King of France"
-            onClick={() => setTerm("king of france")}
+            term="Snoop"
+            onClick={() => setTerm("snoop")}
+          />
+          <ExampleSnoopTerm
+            term="Van Gogh"
+            onClick={() => setTerm("van Gogh")}
+          />
+          <ExampleSnoopTerm
+            term="Modern art"
+            onClick={() => setTerm("modern art")}
           />
         </div>
         {loading && (
