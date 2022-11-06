@@ -136,12 +136,16 @@ function App() {
   return (
     <div className="bg-[#10081B] text-white absolute h-full w-full overflow-x-auto">
       <main className="w-full ml-auto mr-auto px-4 md:w-[40rem]">
-        <img
-          className="py-8"
-          src={`${process.env.PUBLIC_URL}/logo.png`}
-          width="60%"
-          alt="SNOOP DOGE"
-        />
+        <a href="https://franksandqvist.github.io/junction-binance-nft/">
+          {" "}
+          <img
+            className="py-8"
+            src={`${process.env.PUBLIC_URL}/logo.png`}
+            width="60%"
+            alt="SNOOP DOGE"
+          />
+        </a>
+
         <p className="mb-4 font-bold">
           You probably think NFT's are bullsh*t. You won't with Snoop Doge by
           your side.
@@ -186,29 +190,35 @@ function App() {
           className="rounded-lg bg-no-repeat bg-cover bg-center blur-md h-1 mb-3 mx-2"
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
         />
-        <div className="flex flex-row mb-4 gap-1 flex-wrap">
+        <div className="flex flex-row mb-4 gap-1 flex-wrap padding-0">
           <ExampleSnoopTerm
             term="Pixelated cat"
             onClick={() => setTerm("pixelated cat")}
           />
+
+          <ExampleSnoopTerm
+            term="Elon musk"
+            onClick={() => setTerm("elon musk")}
+          />
+
           <ExampleSnoopTerm
             term="Bored monkey"
             onClick={() => setTerm("bored monkey")}
           />
+
           <ExampleSnoopTerm
-            term="Doge with sunglasses"
-            onClick={() => setTerm("doge with sunglasses")}
+            term="Hackathon"
+            onClick={() => setTerm("hackathon")}
           />
+
           <ExampleSnoopTerm
             term="Cyberpunk"
             onClick={() => setTerm("cyberpunk")}
           />
           <ExampleSnoopTerm
-            term="Van Gogh"
-            onClick={() => setTerm("van gogh")}
+            term="King of France"
+            onClick={() => setTerm("king of france")}
           />
-          <ExampleSnoopTerm term="Hacker" onClick={() => setTerm("hacker")} />
-          <ExampleSnoopTerm term="Snoop" onClick={() => setTerm("snoop")} />
         </div>
         {loading && (
           <div className="flex justify-end mb-4">
@@ -292,7 +302,7 @@ export const ExampleSnoopTerm = (props: {
 }) => {
   return (
     <button
-      className="bg-black text-sm rounded-md p-2 py-0 border-[1px] border-violet-800 hover:scale-105 duration-150 whitespace-nowrap"
+      className="bg-black text-sm rounded-md p-2 py-0 border-[1px] border-violet-800 hover:scale-105 duration-150 whitespace-nowrap my-1"
       onClick={props.onClick}
     >
       {props.term}
