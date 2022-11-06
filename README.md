@@ -23,6 +23,8 @@ The data is pre-processed on a variety of image and text pairs with CLIP (Contra
 ---
 The tool is available online and can be tested out by anyone at https://bit.ly/snoopdogenft
 
+![](https://github.com/FrankSandqvist/junction-binance-nft/blob/main/assets/nft-snoopdoge.003.jpeg)
+
 And you can run it by yourself:
 
 ### Frontend
