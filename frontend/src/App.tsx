@@ -186,29 +186,35 @@ function App() {
           className="rounded-lg bg-no-repeat bg-cover bg-center blur-md h-1 mb-3 mx-2"
           style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)` }}
         />
-        <div className="flex flex-row mb-4 gap-1 flex-wrap">
+        <div className="flex flex-row mb-4 gap-1 flex-wrap padding-0">
           <ExampleSnoopTerm
             term="Pixelated cat"
             onClick={() => setTerm("pixelated cat")}
           />
-          <ExampleSnoopTerm
-            term="Bored monkey"
-            onClick={() => setTerm("bored monkey")}
-          />
+
           <ExampleSnoopTerm
             term="Doge with sunglasses"
             onClick={() => setTerm("doge with sunglasses")}
           />
+
+          <ExampleSnoopTerm
+            term="Bored monkey"
+            onClick={() => setTerm("bored monkey")}
+          />
+
+          <ExampleSnoopTerm
+            term="Hackathon"
+            onClick={() => setTerm("hackathon")}
+          />
+
           <ExampleSnoopTerm
             term="Cyberpunk"
             onClick={() => setTerm("cyberpunk")}
           />
           <ExampleSnoopTerm
-            term="Van Gogh"
-            onClick={() => setTerm("van gogh")}
+            term="King of France"
+            onClick={() => setTerm("king of france")}
           />
-          <ExampleSnoopTerm term="Hacker" onClick={() => setTerm("hacker")} />
-          <ExampleSnoopTerm term="Snoop" onClick={() => setTerm("snoop")} />
         </div>
         {loading && (
           <div className="flex justify-end mb-4">
@@ -292,7 +298,7 @@ export const ExampleSnoopTerm = (props: {
 }) => {
   return (
     <button
-      className="bg-black text-sm rounded-md p-2 py-0 border-[1px] border-violet-800 hover:scale-105 duration-150 whitespace-nowrap"
+      className="bg-black text-sm rounded-md p-2 py-0 border-[1px] border-violet-800 hover:scale-105 duration-150 whitespace-nowrap my-1"
       onClick={props.onClick}
     >
       {props.term}
