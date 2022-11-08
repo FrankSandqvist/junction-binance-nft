@@ -25,12 +25,12 @@ def readb64(uri):
    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
    return img
 
-df = pd.read_csv('file2.csv')
+df = pd.read_csv('merged.csv')
 clip_embedder = EmbedderOpenCLIP(device = 'cpu', clip_model_name = 'ViT-B-16-plus-240', pretrained = 'laion400m_e32')
 
 app = Flask(__name__)
 indexer = Indexer()
-indexer.load('unverified.npy')
+indexer.load('merged.npy')
 
 @app.route('/', methods=['GET'])
 @cross_origin()
